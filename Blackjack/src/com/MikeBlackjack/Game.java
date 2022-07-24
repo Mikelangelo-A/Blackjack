@@ -72,26 +72,26 @@ public class Game {
             if(player.hasBlackjack()){
                 System.out.println("Push! Both parties have a Blackjack!");
                 pushes++;
-                startRound();
+                promptNewRound();
             }
             else{
                 System.out.println("Dealer has Blackjack. Player loses.");
                 losses++;
-                startRound();
+                promptNewRound();
             }
         
         }
         if(player.hasBlackjack()){
             System.out.println("Player has a Blackjack!");
             wins++;
-            startRound();
+            promptNewRound();
         }
         player.makeDecision(deck, discarded);
         // Check if player doesn't have too many.
         if(player.getHand().calculateValue() > 21){
             System.out.println("Too many, you have gone over 21...");
             losses++;
-            startRound();
+            promptNewRound();
         }
 
         dealer.printHand();
@@ -119,6 +119,10 @@ public class Game {
             Thread.sleep(1000);
             pushes++;
         }
+       promptNewRound();
+    }
+
+    private void promptNewRound(){
         Scanner scanner = new Scanner(System.in);
         boolean getNum = true;
         while(getNum) {
