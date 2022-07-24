@@ -11,7 +11,7 @@ public class Player extends Person {
         super.setName("Player");
     }
 
-    public void makeDecision(Deck deck, Deck discarded){    
+    public void makeDecision(Deck deck, Deck discarded) throws InterruptedException {
         int decision = 0;
         boolean getNum = true;
 

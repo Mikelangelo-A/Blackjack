@@ -25,12 +25,13 @@ public abstract class Person {
         this.name = name;
     }
 
-    public void printHand(){
+    public void printHand() throws InterruptedException {
         System.out.println(this.name + "'s hand looks like this:");
         System.out.println(this.hand + " Valued at: " + this.hand.calculateValue());
+        Thread.sleep(1500);
     }
 
-    public void hit(Deck deck, Deck discarded){
+    public void hit(Deck deck, Deck discarded) throws InterruptedException {
         if(!deck.hasCards()){
             deck.reloadCardsFromDiscard(discarded);
         }
@@ -39,10 +40,6 @@ public abstract class Person {
         this.printHand();
     }
     public boolean hasBlackjack(){
-        if(this.getHand().calculateValue() == 21 && this.getHand().cardCount() == 2){
-            return true;
-        } else {
-            return false;
-        }
+        return this.getHand().calculateValue() == 21 && this.getHand().cardCount() == 2;
     }
 }

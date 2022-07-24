@@ -1,5 +1,7 @@
 package com.MikeBlackjack;
 
+import java.util.Scanner;
+
 public class Game {
     
     
@@ -10,7 +12,7 @@ public class Game {
     private Player player;
     private int wins, losses, pushes;
 
-    public Game(){
+    public Game() throws InterruptedException {
         // Create deck with full 52 cards
         deck = new Deck(true);
         // Create another empty deck, in which the played cards will go.
@@ -29,7 +31,7 @@ public class Game {
 
     }
 
-    private void startRound(){
+    private void startRound() throws InterruptedException {
         // Player draws a card, then the dealer, then player, then the dealer draws the second card.
         // Check, whether the player or dealer has a blackjack.
         // If yes, round is over, if no, continue
@@ -44,10 +46,12 @@ public class Game {
         if(wins > 0 || losses > 0 || pushes > 0){
             System.out.println();
             System.out.println("Starting next round...");
+            Thread.sleep(1000);
             System.out.println("Current statistics : ");
             System.out.println("Wins : " + wins);
             System.out.println("Losses : " + losses);
             System.out.println("Pushes : " + pushes);
+            Thread.sleep(1000);
             player.getHand().discardHandToDeck(discarded);
             dealer.getHand().discardHandToDeck(discarded);
         }
@@ -97,22 +101,50 @@ public class Game {
 
         if(dealer.getHand().calculateValue() > 21 ){
             System.out.println("Dealer busts. Congratulations!");
+            Thread.sleep(1000);
             wins++;
         }
         else if(dealer.getHand().calculateValue() > player.getHand().calculateValue()){
             System.out.println("Dealer wins. You lose.");
+            Thread.sleep(1000);
             losses++;
         }
         else if(dealer.getHand().calculateValue() < player.getHand().calculateValue()){
             System.out.println("You win! Congratulations!");
+            Thread.sleep(1000);
             wins++;
         }
         else{
             System.out.println("Push. Thanks for playing.");
+            Thread.sleep(1000);
             pushes++;
         }
-
-        startRound();
+        Scanner scanner = new Scanner(System.in);
+        boolean getNum = true;
+        while(getNum) {
+            try{
+                System.out.println();
+                System.out.println("Would you like to 1) play another round  or  2) quit?");
+                int decision = scanner.nextInt();
+                // additional if statement to get either 1 or 2
+                if(decision == 1 || decision == 2){
+                    getNum = false;
+                    if(decision == 1){
+                        startRound();
+                    } else {
+                        System.out.println("Thank you for playing Blackjack!");
+                        break;
+                    }
+                }
+                else {
+                    System.out.println("Invalid numeric input, try again.");
+                }
+            }
+            catch (Exception e) {
+                System.out.println("Invalid input, try again.");
+                scanner.next();
+            }
+        }
     }
 }
 
